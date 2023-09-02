@@ -22,9 +22,9 @@ impl Parse for Controller {
             .parse()
             .map_err(|_| Error::new(id.span(), "Missing '@'."))?;
         let base: LitStr = input.parse()?;
-        let _: Token![:] = input
+        let _: Token![=>] = input
             .parse()
-            .map_err(|_| Error::new(base.span(), "Missing ':'."))?;
+            .map_err(|_| Error::new(base.span(), "Missing '=>'."))?;
         let handler_type: Type = input.parse()?;
         let _: Token![;] = input
             .parse()
@@ -81,7 +81,7 @@ impl ToTokens for Controller {
             })
             .fold(quote::quote!(), |a, b| quote::quote!(#a #b));
         tokens.extend(quote::quote! {
-            pub fn #id() -> Vec<#handler_type> {
+            pub fn #id() -> Vec<(String, #handler_type)> {
                 vec![#handlers]
             }
         });

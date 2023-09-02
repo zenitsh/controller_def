@@ -12,7 +12,7 @@ lazy_static! {
 }
 
 controller_def! {
-    dict@"/dict": MethodRouter<(), Body>;
+    dict@"/dict" => MethodRouter<(), Body>;
     GET = || async move {
         let read = HASHMAP.read().unwrap();
         let res = Vec::from_iter(read.iter().map(|(k, v)| { [ k, v ] }));
