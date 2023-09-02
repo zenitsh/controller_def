@@ -81,7 +81,7 @@ impl ToTokens for Controller {
             })
             .fold(quote::quote!(), |a, b| quote::quote!(#a #b));
         tokens.extend(quote::quote! {
-            pub fn #id() -> Vec<(String, #handler_type)> {
+            pub fn #id() -> Vec<#handler_type> {
                 vec![#handlers]
             }
         });
